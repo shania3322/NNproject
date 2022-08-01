@@ -1,3 +1,32 @@
-## Build transformer from scratch
+## Task1: Build a multi-layer neural network from scratch
+
+My very first version network built from scratch (It looks ugly at the moment).
+The only library used here is Numpy. The mode difficult part is calculating
+partial derivatives in backpropagation. I found 3 different ways to calculate
+the gradient.
+
+Method 1: Calculating partial derivatives with respect to each weight and bia.
+It is uneffecient but it is a good begining to understand how the a small change
+in a parameter causes the change of the output.
+[Tutorial](#tutorial-for-method-1)
+
+Method 2: Using Jacobian matrix to find the gradient by calculate the
+first-order partial derivatives between vectors.[Jacobian](#jacobian)
+
+Method 3: Using a scalar function to find the gradient. The method is explained
+in [Matrix Calculus](#matrix-calculus)
+
+Referrences:
+
+### Tutorial for Method 1
+[building a neural network](http://neuralnetworksanddeeplearning.com/chap1.html)
+
+### Jacobian
+[Calculus for backpropagation---calculating gradient](https://www.youtube.com/watch?v=tIeHLnjs5U8)
+
+### Matrix Calculus
+[matrix calculus---alternative way to calculate gradient](https://www.youtube.com/watch?v=oGZK3yGF-6k)
+
+## Task2: Build transformer from scratch
 
 Referred to paper **Attention Is All You Need**
