@@ -1,25 +1,26 @@
 from model import Network
-from helper import DataLoader, onehot
+from helper import DataLoader
 import numpy as np
 
 def run():
     # config
-    train_size=20
-    batch_size=5
-    train=True
+    train_size=40000
+    test_ratio=0.01
+    batch_size=10
 
     # print network
     net = Network(batch_size=batch_size)
-    print(f'number of layers: {net.num_layers}, batch size: {net.batch_size}')
-    for i in net.bias:
-        print(f'bias: {i.shape}')
-    for i in net.weights:
-        print(f'weights:{i.shape}')
+    print(net)
+    #print(f'number of layers: {net.num_layers}, batch size: {net.batch_size}')
+    #for i in net.bias:
+    #    print(f'bias: {i.shape}')
+    #for i in net.weights:
+    #    print(f'weights:{i.shape}')
 
     # read image into array
-    dataloader = DataLoader(train=train,num=train_size)
-    data, label = dataloader.load_data()
-    print(f'data: {data.shape}, label: {label.shape}')
+    dataloader = DataLoader()
+    data, label = dataloader.load_data(train=True,num=train_size)
+    #print(f'data: {data.shape}, label: {label.shape}')
 
     # forward
     #for _ in range(1):
@@ -42,16 +43,18 @@ def run():
     #    else:
     #        print(f'self.acts:{t1.shape}')
 
-    #net.backprop(data.reshape(-1,28*28),label_oh)
-    label_onehot = onehot(label.reshape(-1,1))
-    #print(label_onehot.shape)
-    train_data,test_data = data[:(train_size-5)],data[-5:]
-    train_label,test_label = label_onehot[:(train_size-5)],label_onehot[-5:]
+    #train_data,test_data = data[:(train_size-test_size)],data[-test_size:]
+    #train_label,test_label = label[:(train_size-test_size)],label[-test_size:]
+    #train = (train_data.reshape(-1,28*28), train_label)
+    #test = (test_data.reshape(-1,28*28), test_label)
+    #net.SGD(train_data=train,test_data=test,epochs=30)
 
-    train = (train_data.reshape(-1,28*28), train_label)
-    test = (test_data.reshape(-1,28*28), test_label)
-    #print(f'{train[0].shape,train[1].shape,test[0].shape,test[1].shape}')
-    net.SGD(train_data=train,test_data=test)
+    net.SGD(train_data=(data.reshape(-1,28*28),label), epochs=15)
+    #TODO:
+    # 1. Rewrite forward and backward to build any size/layer network
+    # 2. Always use (N,1) for a vector.
+    # 3. Save and reload weights
+    # 4. Adding type hints
 
 
 if __name__ == "__main__":

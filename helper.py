@@ -9,11 +9,9 @@ import numpy.typing as npt
 import glob
 
 class DataLoader:
-    def __init__(self, folder:str='data/', train:bool=True, num:int=10):
+    def __init__(self, folder:str='data/'):
         self.root = folder
         self.paths = {}
-        self.train = train
-        self.num = num
 
     def get_path(self):
         itr = glob.iglob(self.root+"**")
@@ -50,14 +48,14 @@ class DataLoader:
             print(f'err {err=} {type(err)=}')
             raise
 
-    def load_data(self) -> npt.ArrayLike:
+    def load_data(self, train:bool=True, num:int=10) -> npt.ArrayLike:
         self.get_path()
-        if self.train:
-            data,_ = self.read_img(self.paths['train_data'], self.num)
-            label,_ = self.read_label(self.paths['train_labels'], self.num)
+        if train:
+            data,_ = self.read_img(self.paths['train_data'], num)
+            label,_ = self.read_label(self.paths['train_labels'], num)
         else:
-            data,_ = self.read_img(self.paths['test_data'], self.num)
-            label,_ = self.read_label(self.paths['test_labels'], self.num)
+            data,_ = self.read_img(self.paths['test_data'], num)
+            label,_ = self.read_label(self.paths['test_labels'], num)
 
         return data, label
 
@@ -69,22 +67,13 @@ class DataLoader:
         except:
             print(f'Something wrong')
 
-def onehot(num:npt.ArrayLike):
-    """
-    :num:the output of last layer, size [N,1], N is the batch_size
-    """
-    ret = np.zeros((num.size,10),dtype=np.int)
-    for i in range(ret.shape[0]):
-        ret[i,num[i]]=1
-    return ret
-
 
 # debug
 def main():
     dataloader = DataLoader(train=True,num=10)
     data, label = dataloader.load_data()
     print(f'data: {data.shape}, label: {label.shape}, {label}')
-    #dataloader.display(data[2])
+    dataloader.display(data[2])
 
 if __name__=='__main__':
     main()
