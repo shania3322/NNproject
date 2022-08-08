@@ -16,8 +16,27 @@ first-order partial derivatives between vectors.[Jacobian](#jacobian)
 Method 3: Using a scalar function to find the gradient. The method is explained
 in [Matrix Calculus](#matrix-calculus)
 
+Best Train Scores:
+|params		   ||
+|:-------------|:-----------------------------------------------------|
+|Network layers| 784-32-10|
+|batch size    | 10	|
+|train         | 40,000 images	|
+|validation    | 400 images<br/>(4-fold-cross-validation: train:validation=0.99:0.01)|
+|initialization for weights and bias| standard normal distribution	|
+|learning rate | 0.1 |
+|Epochs        | 15	|
+
+![Best](assets/784-32-10-train_40000_test_dot01_cvsplit_4_batch_size_10_lr_dot1_15epochs.png)
+
+Best Test Scores:
+
+TODO
+
+
 TODO:
-1. Fix training
+
+1. ~~Fix training~~
 2. Add numpy Type Hint
 3. Add method 3
 
